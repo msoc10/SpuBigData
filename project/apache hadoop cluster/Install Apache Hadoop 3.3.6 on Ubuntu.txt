@@ -1,0 +1,201 @@
+Install Apache Hadoop:
+======================
+
+requirements:
+
+- hadoop 3.2.6
+- java 8 (MUST java 8 for hadoop 3.x.x)
+- 2 server
+ - master server (10.0.1.219/ubuntu20.04_svr_01, hostname:spuhadoop1)
+ - slave server (10.0.1.220/ubuntu20.04_svr_02, hostname:spuhadoop2)
+
+Step 1: Prerequisite
+
+
+Java 8(OpenJDK) to be installed and set the JAVA_HOME environment variable in /home/hadoop/.bashrc file
+
+
+echo $JAVA_HOME
+
+
+To verify the java version you can use the following command:
+
+java -version
+
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/hadoop/bin:/usr/local/hadoop/sbin"
+
+JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre"
+
+From home directory(/home/hadoop), following directories are created
+
+mkdir workarea
+
+cd workarea
+
+mkdir software
+
+cd software
+
+pwd
+
+cd ~
+
+pwd
+
+Step 2: Create the SSH Key for password-less login (Press enter button when it asks you to enter a filename to save the key)
+
+sudo apt-get install openssh-server openssh-client
+
+# adduser hadoop
+ usermod -aG hadoop hadoop
+ chown hadoop:root -R /usr/local/hadoop
+ chmod g+rwx -R /usr/local/hadoop
+
+ su - hadoop
+
+ssh-keygen -t rsa -P ""
+
+$ ssh-copy-id hadoop@spuhadoop1.admintome.lab
+$ ssh-copy-id hadoop@spuhadoop2.admintome.lab
+
+ls /home/hadoop/.ssh
+
+
+
+Copy the generated ssh key to authorized keys
+
+cat /home/hadoop/.ssh/id_rsa.pub >> /home/hadoop/.ssh/authorized_keys
+
+ssh localhost
+
+
+exit
+
+
+Step 3: Download the Hadoop 3.3.6 Package/Binary file
+
+https://hadoop.apache.org/releases.html
+
+
+wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+
+
+Move the file: hadoop-3.3.6.tar.gz into /usr/local/hadoop directory
+
+mv hadoop-3.3.6.tar.gz /usr/local/hadoop
+
+cd /usr/local/hadoop
+
+sudo tar -xzvf hadoop-3.3.6.tar.gz
+
+
+Step 4: Add the HADOOP_HOME and JAVA_HOME paths in the bash file (.bashrc)
+
+# HADOOP VARIABLES SETTINGS START HERE
+
+export HADOOP_HOME=/usr/local/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin
+export PATH=$PATH:$HADOOP_HOME/sbin
+export HADOOP_MAPRED_HOME=$HADOOP_HOME
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export HADOOP_COMMON_HOME=$HADOOP_HOME
+export HADOOP_HDFS_HOME=$HADOOP_HOME
+export YARN_HOME=$HADOOP_HOME
+
+
+# HADOOP VARIABLES SETTINGS END HERE
+
+nano ~/.bashrc
+
+source ~/.bashrc
+
+
+hadoop version
+
+
+Step 5: Create or Modifiy Hadoop configuration files
+
+Now open the configuration files in /usr/local/hadoop/etc/hadoop directory.
+
+Edit hadoop-env.sh as file
+
+
+sudo nano /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+
+
+Edit core-site.xml as file
+
+cd /usr/local/hadoop/etc/hadoop
+
+sudo nano core-site.xml
+
+Edit hdfs-site.xml as file
+
+sudo nano hdfs-site.xml
+
+Edit yarn-site.xml as file
+
+sudo nano yarn-site.xml
+
+Edit workers as file
+
+sudo nano workers 
+
+
+Step 6: Format the namenode
+
+$ source /etc/environmnet
+$ hdfs namenode -format
+
+Start the NameNode daemon and DataNode daemon by using the scripts in the /sbin directory, provided by Hadoop.
+
+start-dfs.sh
+
+Starting namenodes on [spuhadoop1.admintome.lab]
+Starting datanodes
+Starting secondary namenodes [spuhadoop1]
+
+start-yarn.sh
+
+Starting resourcemanager
+Starting nodemanagers
+
+
+Run jps command to check running hadoop JVM processes
+
+jps master server
+
+jps
+29352 Jps
+28833 ResourceManager
+28626 SecondaryNameNode
+28263 NameNode
+
+jps slave server
+
+jps
+14352 Jps
+14393 DataNode
+14981 NodeManager
+
+Run yarn node -list command to verify that it started correctly by running this command:
+$ yarn node -list
+
+HDFS Web UI
+You can now access the HDFS web UI by browsing to your Hadoop Master Server port 9870.
+http://localhost:9870
+
+http://10.0.1.219:9870
+
+
+Hadoop Web UI
+You can view the Hadoop Web UI by going to this URL:
+
+http://localhost:8088
+
+http://10.0.1.219:8088
+
+https://youtu.be/zGP0Uqm0SAo?si=BhMZBR7C8hmlorSo
+https://youtu.be/_iP2Em-5Abw?si=eOZUSOxaH0Cf9Uvd
+https://youtu.be/5ceOzxiVZXM?si=zuwT7aKGDaDldVnN
+https://www.youtube.com/@bigdata4756

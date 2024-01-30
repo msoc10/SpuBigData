@@ -1,0 +1,202 @@
+Install Apache Hive on Ubuntu:
+==============================
+
+
+Step 1: Download Apache Hive
+
+https://hive.apache.org/downloads.html
+
+
+Click on "hive-3.1.2/" hyperlink
+
+
+apache-hive-3.1.2-bin.tar.gz
+
+
+https://dlcdn.apache.org/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz
+
+
+wget https://dlcdn.apache.org/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz
+
+ls
+
+apache-hive-3.1.2-bin.tar.gz
+
+
+Copy apache-hive-3.1.2-bin.tar.gz file into /usr/local/hive/ directory
+
+
+ls /usr/local/hive/
+
+
+mv apache-hive-3.1.2-bin.tar.gz /usr/local/hive/
+
+
+cd /usr/local/hive/
+
+ls
+
+tar -xvzf apache-hive-3.1.2-bin.tar.gz
+
+
+Step 2: Add the HIVE_HOME path in the bash file (.bashrc)
+
+nano ~/.bashrc
+
+export HIVE_HOME=/home/datamaking/workarea/software/apache-hive-3.1.3-bin
+export HIVE_CONF_DIR=/home/datamaking/workarea/software/apache-hive-3.1.3-bin/conf
+export PATH=$HIVE_HOME/bin:$PATH
+
+
+source ~/.bashrc
+
+
+Step 3: Create "warehouse" directory in HDFS
+
+Use below HDFS commands to create /tmp and /user/hive/warehouse (aka hive.metastore.warehouse.dir) and set them chmod 777 before you can create a table in Hive.
+
+Check HDFS processes are running,
+
+jps
+
+start-dfs.sh
+
+jps
+
+hdfs dfs -mkdir /tmp
+
+hdfs dfs -chmod 777 /tmp
+
+hdfs dfs -mkdir -p /user/hive/warehouse
+
+hdfs dfs -chmod 777 /user/hive/warehouse
+
+
+Step 4: Configure Hive with MySQL as Metastore
+
+
+Install MySQL and configure root user
+
+
+sudo systemctl status mysql
+
+
+sudo mysql -u root -p
+
+CREATE DATABASE metastore;
+
+USE metastore;
+
+CREATE USER 'hive'@'%' IDENTIFIED BY 'P@sw0rd';
+
+GRANT ALL PRIVILEGES ON *.* TO 'hive'@'%' WITH GRANT OPTION;
+
+FLUSH PRIVILEGES;
+
+exit;
+
+
+Configure hive-site.xml in ${HIVE_HOME}/conf/
+
+ls ${HIVE_HOME}/conf/
+
+cd ${HIVE_HOME}/conf/
+
+nano hive-site.xml
+
+Installing the MySQL JDBC Driver
+
+
+Download the MySQL JDBC driver from below link
+
+https://dev.mysql.com/downloads/connector/j/ (in .tar.gz format).
+
+pwd
+
+
+cd ../..
+
+pwd
+
+wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j-8.1.0.tar.gz
+
+ls
+
+tar -xvzf mysql-connector-j-8.1.0.tar.gz
+
+ls
+
+ls /usr/share/java/
+
+Copy the JDBC driver, renamed, to /usr/share/java/. 
+
+If the target directory does not yet exist, create it. 
+For example:
+
+sudo mkdir -p /usr/share/java/
+
+cd mysql-connector-j-8.1.0
+
+sudo cp mysql-connector-j-8.1.0.jar /usr/share/java/mysql-connector-java.jar
+
+
+sudo cp mysql-connector-j-8.1.0.jar /usr/local/hive/lib/mysql-connector-java.jar
+
+
+Create Hive schema (MySQL)
+
+ls ${HIVE_HOME}/bin/schematool
+
+${HIVE_HOME}/bin/schematool -initSchema -dbType mysql
+
+
+FYI.
+
+0: jdbc:mysql://localhost/metastore> !closeall
+Closing: 0: jdbc:mysql://localhost/metastore?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+beeline> 
+beeline> Initialization script completed
+schemaTool completed
+(base) datamaking@datamakingws:~/workarea/software/mysql-connector-j-8.1.0$ 
+
+
+Upgrade metastore database in mysql (Optional)
+
+cd ${HIVE_HOME}/scripts/metastore/upgrade/mysql/
+
+mysql -u root -p
+
+USE metastore;
+
+source hive-schema-3.1.0.mysql.sql;
+
+exit;
+
+
+nohup hive --service metastore &
+
+
+nohup hive --service hiveserver2 &
+
+
+Verify port no
+
+netstat -an | grep 9083
+
+sudo apt install net-tools
+
+open Hive CLI
+
+hive
+
+show databases;
+
+show tables;
+
+
+Hiveserver2 Web UI:
+
+http://localhost:10002/
+
+https://youtu.be/pAx2To0kCVI?si=W_dM9ZWhmd00bgSc
+https://youtu.be/wPIawRML168?si=rx0ZI1YeBcfEB88z

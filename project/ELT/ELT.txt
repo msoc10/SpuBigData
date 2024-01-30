@@ -1,0 +1,4 @@
+•Split the ''Date'' column that have this   format "2015-03-15 00:52:40" that include the date and time to date column and time column
+•Add an "Index" column for each file to know the file and the name of the stock market 
+•Add "Quarter" Column to data 
+•Add new Column "Month", this column Extract from Date column (In Power BI)

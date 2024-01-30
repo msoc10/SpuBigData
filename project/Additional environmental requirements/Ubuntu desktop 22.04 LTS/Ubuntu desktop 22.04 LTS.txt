@@ -1,0 +1,29 @@
+ Data center and Information about it 
+ Servers types and about the specification 
+ Chose ubuntu server as the operating system for Hadoop and 
+config it. 
+ steps: 
+- install ubuntu server at each server 
+https://releases.ubuntu.com/20.04.6/ubuntu-20.04.6-live-server-amd64.iso
+https://releases.ubuntu.com/22.04.3/ubuntu-22.04.3-desktop-amd64.iso
+- configure Server by passing the IP Address, 
+Faced Some problem configuration: 
+FIRST 
+- The operating system did not recognize the server’s 
+network card 
+SECOND 
+- the SSH problem: the way to identify the server with the 
+college laboratories and halls so that we communicate with 
+the servers from the halls 
+ How to solve all these problems? 
+- Changing the operating system to Ubuntu desktop22.04 
+- configure the IP Address for each server 
+ Master server: spu@10.0.1.219
+ Slave server: spu@10.0.1.220
+-Now we can access the server from all halls and laboratories using 
+ ssh by using “ ssh spu@10.0.1.219/220 “ 
+
+https://youtu.be/K2m52F0S2w8?si=fhySpy7SS0dc-2B6
+https://youtu.be/C5deqtXrpgk?si=uKQfuAFOU6grIE_n
+
+

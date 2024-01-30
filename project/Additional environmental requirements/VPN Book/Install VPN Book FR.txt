@@ -1,0 +1,19 @@
+sudo su
+
+sudo apt update
+
+apt install openvpn unzip curl 
+
+curl -o vpn.zip  https://www.vpnbook.com/free-openvpn-account/vpnbook-openvpn-fr200.zip
+
+unzip vpn.zip 
+
+cd vpnbook-openvpn-fr200
+
+openvpn vpnbook-fr200-tcp443.ovpn 
+username: vpnbook
+password: from website
+
+ip a: new tun
+
+https://www.vpnbook.com/

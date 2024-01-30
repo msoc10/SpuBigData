@@ -1,0 +1,77 @@
+This dataset contains historical daily prices for Nifty 100 stocks and indices currently trading on the Indian Stock Market.
+
+sourse
+https://www.kaggle.com/datasets/debashis74017/stock-market-data-nifty-50-stocks-1-min-data
+
+OHLCV (Open, High, Low, Close, and Volume) data
+55 Technical indicator values
+The columns contain different technical indicators related to financial market data. Below is a brief explanation of each:
+
+1) Date: It represents the date of observation or the particular day for which the data is recorded.
+2) Open: The opening price of the index on a specific day.
+3) High: The highest price of the index reached on a particular day.
+4) Low: The lowest price of the index reached on a particular day.
+5) Close: The closing price of the index on a particular day.
+
+Moving Averages:
+6) sma5: Simple Moving Average calculated using the last 5 close prices.
+7) sma10: Simple Moving Average calculated using the last 10 close prices.
+8) sma15: Simple Moving Average calculated using the last 15 close prices.
+9) sma20: Simple Moving Average calculated using the last 20 close prices.
+
+Exponential Moving Averages:
+10) ema5: Exponential Moving Average calculated using the last 5 close prices.
+11) ema10: Exponential Moving Average calculated using the last 10 close prices.
+12) ema15: Exponential Moving Average calculated using the last 15 close prices.
+13) ema20: Exponential Moving Average calculated using the last 20 close prices.
+
+Bollinger Bands:
+14) upperband: The upper band of the Bollinger Bands indicator.
+15) middleband: The middle band of the Bollinger Bands indicator.
+16) lowerband: The lower band of the Bollinger Bands indicator.
+
+Other Technical Indicators:
+17) HT_TRENDLINE: Hilbert Transform - Instantaneous Trendline indicator.
+18) KAMA10: Kaufman Adaptive Moving Average of 10 close prices.
+19) KAMA20: Kaufman Adaptive Moving Average of 20 close prices.
+20) KAMA30: Kaufman Adaptive Moving Average of 30 close prices.
+21) SAR: Parabolic SAR indicator.
+22) TRIMA5: Triangular Moving Average of 5 close prices.
+23) TRIMA10: Triangular Moving Average of 10 close prices.
+24) TRIMA20: Triangular Moving Average of 20 close prices.
+25) ADX5: Average Directional Movement Index calculated using the last 5 close prices.
+26) ADX10: Average Directional Movement Index calculated using the last 10 close prices.
+27) ADX20: Average Directional Movement Index calculated using the last 20 close prices.
+28) APO: Absolute Price Oscillator.
+29) CCI5: Commodity Channel Index using the last 5 time frame data.
+30) CCI10: Commodity Channel Index using the last 10 time frame data.
+31) CCI15: Commodity Channel Index using the last 15 time frame data.
+32) macd510: Moving Average Convergence/Divergence with fast period 5 and slow period 10.
+33) macd520: Moving Average Convergence/Divergence with fast period 5 and slow period 20.
+34) macd1020: Moving Average Convergence/Divergence with fast period 10 and slow period 20.
+35) macd1520: Moving Average Convergence/Divergence with fast period 15 and slow period 20.
+36) macd1226: Moving Average Convergence/Divergence with fast period 12 and slow period 26.
+37) MOM10: Momentum indicator calculated using the past 10 close prices.
+38) MOM15: Momentum indicator calculated using the past 15 close prices.
+39) MOM20: Momentum indicator calculated using the past 20 close prices.
+40) ROC5: Rate of Change using the past 5 close prices.
+41) ROC10: Rate of Change using the past 10 close prices.
+42) ROC20: Rate of Change using the past 20 close prices.
+43) PPO: Percentage Price Oscillator.
+44) RSI14: Relative Strength Index calculated using the last 14 close prices.
+45) RSI8: Relative Strength Index calculated using the last 8 close prices.
+46) slowk: Stochastic indicator - k value.
+47) slowd: Stochastic indicator - d value.
+48) fastk: Stochastic Fast indicator - k value.
+49) fastd: Stochastic Fast indicator - d value.
+50) fastksr: Stochastic Relative Strength Index - k value.
+51) fastdsr: Stochastic Relative Strength Index - d value.
+52) ULTOSC: Ultimate Oscillator.
+53) WILLR: Williams' %R.
+54) ATR: Average True Range.
+55) Trange: True Range.
+56) TYPPRICE: Typical Price.
+57) HT_DCPERIOD: Hilbert Transform - Dominant Cycle Period.
+58) BETA: Beta.
+
+These columns and technical indicators provide valuable insights and analysis for traders and analysts in understanding market trends, volatility, and potential trading opportunities.
