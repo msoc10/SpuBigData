@@ -1,0 +1,107 @@
+CREATE TABLE stock_ft (
+  date_d DATE,
+  open DOUBLE,
+  high DOUBLE,
+  low DOUBLE,
+  close DOUBLE,
+  volume DOUBLE,
+  sma5 DOUBLE,
+  sma10 DOUBLE,
+  sma15 DOUBLE,
+  sma20 DOUBLE,
+  ema5 DOUBLE,
+  ema10 DOUBLE,
+  ema15 DOUBLE,
+  ema20 DOUBLE,
+  upperband DOUBLE,
+  middleband DOUBLE,
+  lowerband DOUBLE,
+  HT_TRENDLINE DOUBLE,
+  KAMA10 DOUBLE,
+  KAMA20 DOUBLE,
+  KAMA30 DOUBLE,
+  SAR DOUBLE,
+  TRIMA5 DOUBLE,
+  TRIMA10 DOUBLE,
+  TRIMA20 DOUBLE,
+  ADX5 DOUBLE,
+  ADX10 DOUBLE,
+  ADX20 DOUBLE,
+  APO DOUBLE,
+  CCI5 DOUBLE,
+  CCI10 DOUBLE,
+  CCI15 DOUBLE,
+  macd510 DOUBLE,
+  macd520 DOUBLE,
+  macd1020 DOUBLE,
+  macd1520 DOUBLE,
+  macd1226 DOUBLE,
+  MOM10 DOUBLE,
+  MOM15 DOUBLE,
+  MOM20 DOUBLE,
+  ROC5 DOUBLE,
+  ROC10 DOUBLE,
+  ROC20 DOUBLE,
+  PPO DOUBLE,
+  RSI14 DOUBLE,
+  RSI8 DOUBLE,
+  slowk DOUBLE,
+  slowd DOUBLE,
+  fastk DOUBLE,
+  fastd DOUBLE,
+  fastksr DOUBLE,
+  fastdsr DOUBLE,
+  ULTOSC DOUBLE,
+  ATR DOUBLE,
+  Trange DOUBLE,
+  TYPPRICE DOUBLE,
+  HT_DCPERIOD DOUBLE,
+  BETA DOUBLE,
+  time_t TIMESTAMP,
+  Index INT,
+  quarter STRING
+) 
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+
+
+ALTER TABLE stock_names ADD CONSTRAINT pk_stock_names PRIMARY KEY (Index) DISABLE NOVALIDATE RELY;
+
+ALTER TABLE quarters ADD CONSTRAINT pk_quarters PRIMARY KEY (quarter) DISABLE NOVALIDATE RELY;
+
+
+ALTER TABLE stock_ft ADD CONSTRAINT fk_quarter FOREIGN KEY (quarter) REFERENCES quarters (quarter) DISABLE NOVALIDATE;
+
+ALTER TABLE stock_ft ADD CONSTRAINT fk_index FOREIGN KEY (index) REFERENCES stock_names (index) DISABLE NOVALIDATE;
+
+
+
+CREATE TABLE stock_names (
+  index INT,
+  stock_name STRING
+) 
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+CREATE TABLE quarters (
+  quarter STRING
+) 
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+LOAD DATA INPATH '/names/stock_names.csv' INTO TABLE stock_names;
+LOAD DATA INPATH 'names/quarters.csv' INTO TABLE quarters;
+LOAD DATA INPATH '/stock' INTO TABLE stock_ft;
+
+In Apache Hive, the clause ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' STORED AS TEXTFILE in a CREATE TABLE statement defines how data is formatted and stored in the table. Here's a breakdown of what each part means:
+
+ROW FORMAT DELIMITED: This specifies that the rows in the table are formatted as delimited text. Delimited format means that the columns in each row are separated by a specific character or sequence of characters.
+
+FIELDS TERMINATED BY '\t': This indicates the delimiter used between fields (columns) in the data. The '\t' represents a tab character. So, in this case, each column in a row is separated by a tab. If your data is in a CSV (comma-separated values) format, for example, you would use ',' as the delimiter.
+
+STORED AS TEXTFILE: This specifies the storage format of the file. TEXTFILE is the default and most basic file format in Hive, where data is stored in plain text format. Other formats like SEQUENCEFILE, PARQUET, ORC, etc., offer more efficient storage and faster access, especially for large datasets.
+
